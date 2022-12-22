@@ -1,6 +1,5 @@
 // to fix:
 // string multiple operators together without pressing equal in between
-// add functionality for percent button
 // make sure delete button works properly
 
 let operator = "";
@@ -34,6 +33,10 @@ function multiply(a, b) {
 function divide(a, b) {
   if (Number(b) === 0) return "Infinity";
   return Number(a) / Number(b);
+}
+
+function percent(a) {
+  return Number(a) / 100;
 }
 
 function operate(type, a, b) {
@@ -106,7 +109,8 @@ decimalBtn.addEventListener("click", () => {
 });
 
 percentBtn.addEventListener("click", () => {
-  // placeholder
+  currentNum.push(percent(previousNums[previousNums.length - 2]));
+  updateLowerDisplay(currentNum);
 });
 
 deleteBtn.addEventListener("click", () => {
