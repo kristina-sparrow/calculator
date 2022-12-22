@@ -78,7 +78,13 @@ equalBtn.addEventListener("click", () => {
   previousNums.push(equalBtn.value);
   updateUpperDisplay(previousNums);
   currentNum = [];
-  currentNum.push(operate(operator, previousNums[0], previousNums[2]));
+  currentNum.push(
+    operate(
+      operator,
+      previousNums[previousNums.length - 4],
+      previousNums[previousNums.length - 2]
+    )
+  );
   updateLowerDisplay(currentNum);
 });
 
