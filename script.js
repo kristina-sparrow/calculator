@@ -1,3 +1,8 @@
+// to fix:
+// string multiple operators together without pressing equal in between
+// add functionality for percent button
+// make sure delete button works properly
+
 let operator = "";
 let previousNums = [];
 let currentNum = [];
@@ -5,11 +10,14 @@ let currentNum = [];
 const numberBtns = document.querySelectorAll(".number");
 const operatorBtns = document.querySelectorAll(".operator");
 const percentBtn = document.getElementById("percent");
+const decimalBtn = document.getElementById("decimal");
 const equalBtn = document.querySelector(".equal");
 const clearBtn = document.getElementById("all-clear");
 const deleteBtn = document.getElementById("delete");
 const lowerDisplay = document.querySelector(".lower-display");
 const upperDisplay = document.querySelector(".upper-display");
+
+equalBtn.disabled = true;
 
 function add(a, b) {
   return Number(a) + Number(b);
@@ -24,6 +32,7 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
+  if (Number(b) === 0) return "Infinity";
   return Number(a) / Number(b);
 }
 
@@ -44,7 +53,7 @@ function operate(type, a, b) {
       result = divide(a, b);
       break;
   }
-  return result;
+  return Math.round(result * 1000000) / 1000000;
 }
 
 function updateLowerDisplay(arr) {
@@ -70,6 +79,7 @@ operatorBtns.forEach((button) => {
     updateUpperDisplay(previousNums);
     currentNum = [];
     updateLowerDisplay(currentNum);
+    equalBtn.disabled = false;
   });
 });
 
@@ -86,6 +96,17 @@ equalBtn.addEventListener("click", () => {
     )
   );
   updateLowerDisplay(currentNum);
+  if (previousNums[previousNums.length - 1] === "=") {
+    equalBtn.disabled = true;
+  }
+});
+
+decimalBtn.addEventListener("click", () => {
+  decimalBtn.disabled = true;
+});
+
+percentBtn.addEventListener("click", () => {
+  // placeholder
 });
 
 deleteBtn.addEventListener("click", () => {
