@@ -1,82 +1,99 @@
-//initialize variables
-let a = 0;
-let b = 0;
 let operator = "";
-let upperDisplayValue = [];
-let lowerDisplayValue = 0;
+let previousNums = [];
+let currentNum = [];
 
-//declare selectors
 const numberBtns = document.querySelectorAll(".number");
 const operatorBtns = document.querySelectorAll(".operator");
-const decimalBtn = document.getElementById("decimal");
-const signBtn = document.getElementById("percent");
-const equalBtn = document.getElementById("equal");
+const percentBtn = document.getElementById("percent");
+const equalBtn = document.querySelector(".equal");
 const clearBtn = document.getElementById("all-clear");
 const deleteBtn = document.getElementById("delete");
 const lowerDisplay = document.querySelector(".lower-display");
 const upperDisplay = document.querySelector(".upper-display");
-const showBtns = document.querySelectorAll(".show");
 
-//update display
-showBtns.forEach(button => {
-    button.addEventListener("click", () => {
-        lowerDisplayValue = button.value;
-        upperDisplayValue.push(button.value);
-        updateDisplay(lowerDisplayValue, upperDisplayValue);
-    })
+function add(a, b) {
+  return Number(a) + Number(b);
+}
+
+function subtract(a, b) {
+  return Number(a) - Number(b);
+}
+
+function multiply(a, b) {
+  return Number(a) * Number(b);
+}
+
+function divide(a, b) {
+  return Number(a) / Number(b);
+}
+
+function operate(type, a, b) {
+  let result = 0;
+  // eslint-disable-next-line default-case
+  switch (type) {
+    case "add":
+      result = add(a, b);
+      break;
+    case "subtract":
+      result = subtract(a, b);
+      break;
+    case "multiply":
+      result = multiply(a, b);
+      break;
+    case "divide":
+      result = divide(a, b);
+      break;
+  }
+  return result;
+}
+
+function updateLowerDisplay(arr) {
+  lowerDisplay.textContent = arr.join("");
+}
+
+function updateUpperDisplay(arr) {
+  upperDisplay.textContent = arr.join(" ");
+}
+
+numberBtns.forEach((button) => {
+  button.addEventListener("click", () => {
+    currentNum.push(button.value);
+    updateLowerDisplay(currentNum);
+  });
+});
+
+operatorBtns.forEach((button) => {
+  button.addEventListener("click", () => {
+    operator = button.id;
+    previousNums.push(currentNum.join(""));
+    previousNums.push(button.value);
+    updateUpperDisplay(previousNums);
+    currentNum = [];
+    updateLowerDisplay(currentNum);
+  });
+});
+
+equalBtn.addEventListener("click", () => {
+  previousNums.push(currentNum.join(""));
+  previousNums.push(equalBtn.value);
+  updateUpperDisplay(previousNums);
+  currentNum = [];
+  currentNum.push(operate(operator, previousNums[0], previousNums[2]));
+  updateLowerDisplay(currentNum);
 });
 
 deleteBtn.addEventListener("click", () => {
-    upperDisplayValue.pop();
-    updateDisplay (this.value, upperDisplayValue);
+  currentNum.pop();
+  previousNums.pop();
+  updateLowerDisplay(currentNum);
+  if (upperDisplay.textContent !== "") {
+    updateUpperDisplay(previousNums);
+  }
 });
 
 clearBtn.addEventListener("click", () => {
-    upperDisplayValue = [];
-    updateDisplay (this.value, upperDisplayValue);
+  currentNum = [];
+  previousNums = [];
+  updateLowerDisplay(currentNum);
+  updateUpperDisplay(previousNums);
 });
-
-function updateDisplay (num, arr) {
-    lowerDisplay.textContent = num;
-    upperDisplay.textContent = arr.join(" ");
-}
-
-// //update values on button click
-// operatorBtns.forEach(button => {
-//     button.addEventListener("click", () => {
-//         return operator = button.id;
-//     })
-// })
-
-//math operators
-function add (a,b) {
-    return a + b;
-}
-
-function subtract (a,b) {
-    return a - b;
-}
-
-function multiply (a,b) {
-    return a * b;
-}
-
-function divide (a,b) {
-    return a / b;
-}
-
-function operate (operator,a,b) {
-    switch(operator) {
-        case "add":
-            add(a,b);
-            break;
-        case "subtract":
-            subtract(a,b);
-            break;
-        case "multiply":
-            multiply(a,b);
-            break;
-        case "divide":
-            divide(a,b);
-    }
-}
