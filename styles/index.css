@@ -40,8 +40,8 @@ body {
   overflow: hidden;
 }
 
-.upper-display,
-.lower-display {
+.screen-upper,
+.screen-lower {
   text-align: right;
   align-items: center;
   padding: 10px;
@@ -49,14 +49,14 @@ body {
   position: relative;
 }
 
-.upper-display {
+.screen-upper {
   color: whitesmoke;
   font-weight: lighter;
   font-size: 1rem;
   top: 20px;
 }
 
-.lower-display {
+.screen-lower {
   color: white;
   font-weight: lighter;
   font-size: 4rem;
@@ -77,7 +77,7 @@ body {
   align-items: stretch;
 }
 
-button {
+.btn {
   border: none;
   border-radius: 5px;
   font-size: 2rem;
@@ -94,7 +94,7 @@ button {
   background-color: rgb(239, 172, 0);
 }
 
-#percent {
+#percentBtn {
   background-color: lightslategray;
 }
 

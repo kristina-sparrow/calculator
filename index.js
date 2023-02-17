@@ -1,129 +1,147 @@
-// to fix:
-// string multiple operators together without pressing equal in between
-// make sure delete button works properly
+// DECLARATIONS
+let firstOperand = "";
+let secondOperand = "";
+let currentOperation = null;
+let shouldResetScreen = false;
 
-const numberBtns = document.querySelectorAll(".number");
-const operatorBtns = document.querySelectorAll(".operator");
-const percentBtn = document.getElementById("percent");
-const decimalBtn = document.getElementById("decimal");
-const equalBtn = document.querySelector(".equal");
-const clearBtn = document.getElementById("all-clear");
-const deleteBtn = document.getElementById("delete");
-const lowerDisplay = document.querySelector(".lower-display");
-const upperDisplay = document.querySelector(".upper-display");
+const numberButtons = document.querySelectorAll("[data-number]");
+const operatorButtons = document.querySelectorAll("[data-operator]");
+const equalsButton = document.getElementById("equalsBtn");
+const clearButton = document.getElementById("clearBtn");
+const deleteButton = document.getElementById("deleteBtn");
+const pointButton = document.getElementById("pointBtn");
+const percentBtn = document.getElementById("percentBtn");
+const lastOperationScreen = document.getElementById("lastOperationScreen");
+const currentOperationScreen = document.getElementById(
+  "currentOperationScreen"
+);
 
-let operator = "";
-let previousNums = [];
-let currentNum = [];
-equalBtn.disabled = true;
+// OPERATE
+const add = (a, b) => a + b;
+const subtract = (a, b) => a - b;
+const multiply = (a, b) => a * b;
+const divide = (a, b) => a / b;
 
-function add(a, b) {
-  return Number(a) + Number(b);
-}
-
-function subtract(a, b) {
-  return Number(a) - Number(b);
-}
-
-function multiply(a, b) {
-  return Number(a) * Number(b);
-}
-
-function divide(a, b) {
-  if (Number(b) === 0) return "Infinity";
-  return Number(a) / Number(b);
-}
-
-function percent(a) {
-  return Number(a) / 100;
-}
-
-function operate(type, a, b) {
-  let result = 0;
-  // eslint-disable-next-line default-case
-  switch (type) {
-    case "add":
-      result = add(a, b);
-      break;
-    case "subtract":
-      result = subtract(a, b);
-      break;
-    case "multiply":
-      result = multiply(a, b);
-      break;
-    case "divide":
-      result = divide(a, b);
-      break;
+function operate(operator, a, b) {
+  // eslint-disable-next-line no-param-reassign
+  [a, b] = [Number(a), Number(b)];
+  switch (operator) {
+    case "+":
+      return add(a, b);
+    case "−":
+      return subtract(a, b);
+    case "×":
+      return multiply(a, b);
+    case "÷":
+      if (b === 0) return null;
+      return divide(a, b);
+    default:
+      return null;
   }
-  return Math.round(result * 1000000) / 1000000;
 }
 
-function updateLowerDisplay(arr) {
-  lowerDisplay.textContent = arr.join("");
+// UPDATE SCREEN
+function resetScreen() {
+  currentOperationScreen.textContent = "";
+  shouldResetScreen = false;
 }
 
-function updateUpperDisplay(arr) {
-  upperDisplay.textContent = arr.join(" ");
+function clear() {
+  currentOperationScreen.textContent = "0";
+  lastOperationScreen.textContent = "";
+  firstOperand = "";
+  secondOperand = "";
+  currentOperation = null;
 }
 
-numberBtns.forEach((button) => {
-  button.addEventListener("click", () => {
-    currentNum.push(button.value);
-    updateLowerDisplay(currentNum);
-  });
-});
+function appendNumber(number) {
+  if (currentOperationScreen.textContent === "0" || shouldResetScreen)
+    resetScreen();
+  currentOperationScreen.textContent += number;
+}
 
-operatorBtns.forEach((button) => {
-  button.addEventListener("click", () => {
-    operator = button.id;
-    previousNums.push(currentNum.join(""));
-    previousNums.push(button.value);
-    updateUpperDisplay(previousNums);
-    currentNum = [];
-    updateLowerDisplay(currentNum);
-    equalBtn.disabled = false;
-  });
-});
+function appendPoint() {
+  if (shouldResetScreen) resetScreen();
+  if (currentOperationScreen.textContent === "")
+    currentOperationScreen.textContent = "0";
+  if (currentOperationScreen.textContent.includes(".")) return;
+  currentOperationScreen.textContent += ".";
+}
 
-equalBtn.addEventListener("click", () => {
-  previousNums.push(currentNum.join(""));
-  previousNums.push(equalBtn.value);
-  updateUpperDisplay(previousNums);
-  currentNum = [];
-  currentNum.push(
-    operate(
-      operator,
-      previousNums[previousNums.length - 4],
-      previousNums[previousNums.length - 2]
-    )
+function deleteNumber() {
+  currentOperationScreen.textContent = currentOperationScreen.textContent
+    .toString()
+    .slice(0, -1);
+}
+
+// EVALUATE
+function roundResult(number) {
+  return Math.round(number * 1000) / 1000;
+}
+
+function evaluate() {
+  if (currentOperation === null || shouldResetScreen) return;
+  if (currentOperation === "÷" && currentOperationScreen.textContent === "0") {
+    // eslint-disable-next-line no-alert
+    alert("You can't divide by 0!");
+    return;
+  }
+  secondOperand = currentOperationScreen.textContent;
+  currentOperationScreen.textContent = roundResult(
+    operate(currentOperation, firstOperand, secondOperand)
   );
-  updateLowerDisplay(currentNum);
-  if (previousNums[previousNums.length - 1] === "=") {
-    equalBtn.disabled = true;
-  }
-});
+  lastOperationScreen.textContent = `${firstOperand} ${currentOperation} ${secondOperand} =`;
+  currentOperation = null;
+}
 
-decimalBtn.addEventListener("click", () => {
-  decimalBtn.disabled = true;
-});
+function setOperation(operator) {
+  if (currentOperation !== null) evaluate();
+  firstOperand = currentOperationScreen.textContent;
+  currentOperation = operator;
+  lastOperationScreen.textContent = `${firstOperand} ${currentOperation}`;
+  shouldResetScreen = true;
+}
 
-percentBtn.addEventListener("click", () => {
-  currentNum.push(percent(previousNums[previousNums.length - 2]));
-  updateLowerDisplay(currentNum);
-});
+function percent() {
+  const currentValue = parseFloat(currentOperationScreen.textContent);
+  const percentValue = currentValue / 100;
+  currentOperationScreen.textContent = percentValue.toString();
+}
 
-deleteBtn.addEventListener("click", () => {
-  currentNum.pop();
-  previousNums.pop();
-  updateLowerDisplay(currentNum);
-  if (upperDisplay.textContent !== "") {
-    updateUpperDisplay(previousNums);
-  }
-});
+// KEYBOARD INPUTS
+function convertOperator(keyboardOperator) {
+  const operatorSymbols = {
+    "/": "÷",
+    "*": "×",
+    "-": "−",
+    "+": "+",
+  };
+  return operatorSymbols[keyboardOperator] || null;
+}
 
-clearBtn.addEventListener("click", () => {
-  currentNum = [];
-  previousNums = [];
-  updateLowerDisplay(currentNum);
-  updateUpperDisplay(previousNums);
-});
+function handleKeyboardInput(e) {
+  if (e.key >= 0 && e.key <= 9) appendNumber(e.key);
+  if (e.key === ".") appendPoint();
+  if (e.key === "%") percent();
+  if (e.key === "=" || e.key === "Enter") evaluate();
+  if (e.key === "Backspace") deleteNumber();
+  if (e.key === "Escape") clear();
+  if (e.key === "+" || e.key === "-" || e.key === "*" || e.key === "/")
+    setOperation(convertOperator(e.key));
+}
+
+// INIT
+window.addEventListener("keydown", handleKeyboardInput);
+equalsButton.addEventListener("click", evaluate);
+clearButton.addEventListener("click", clear);
+deleteButton.addEventListener("click", deleteNumber);
+pointButton.addEventListener("click", appendPoint);
+percentBtn.addEventListener("click", percent);
+
+numberButtons.forEach((button) =>
+  button.addEventListener("click", () => appendNumber(button.textContent))
+);
+
+operatorButtons.forEach((button) =>
+  button.addEventListener("click", () => setOperation(button.textContent))
+);
