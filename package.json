@@ -1,11 +1,4 @@
 {
-  "devDependencies": {
-    "eslint": "^8.30.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-import": "^2.26.0",
-    "prettier": "2.8.1"
-  },
   "name": "calculator",
   "description": "",
   "version": "1.0.0",
@@ -23,5 +16,28 @@
   "bugs": {
     "url": "https://github.com/kristina-sparrow/calculator/issues"
   },
-  "homepage": "https://github.com/kristina-sparrow/calculator#readme"
+  "homepage": "https://github.com/kristina-sparrow/calculator#readme",
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "commonjs": true,
+      "es2021": true
+    },
+    "extends": [
+      "airbnb-base",
+      "prettier"
+    ],
+    "overrides": [],
+    "parserOptions": {
+      "ecmaVersion": "latest"
+    },
+    "rules": {}
+  },
+  "devDependencies": {
+    "eslint": "^8.30.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "prettier": "2.8.1"
+  }
 }

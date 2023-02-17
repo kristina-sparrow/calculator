@@ -2,10 +2,6 @@
 // string multiple operators together without pressing equal in between
 // make sure delete button works properly
 
-let operator = "";
-let previousNums = [];
-let currentNum = [];
-
 const numberBtns = document.querySelectorAll(".number");
 const operatorBtns = document.querySelectorAll(".operator");
 const percentBtn = document.getElementById("percent");
@@ -16,6 +12,9 @@ const deleteBtn = document.getElementById("delete");
 const lowerDisplay = document.querySelector(".lower-display");
 const upperDisplay = document.querySelector(".upper-display");
 
+let operator = "";
+let previousNums = [];
+let currentNum = [];
 equalBtn.disabled = true;
 
 function add(a, b) {
