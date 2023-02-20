@@ -1,0 +1,143 @@
+/* VARIABLES & FONTS */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;600;700;800&display=swap");
+$clr-body: rgb(226, 226, 226);
+$clr-text: #eee;
+$clr-screen: lightseagreen;
+$clr-numberBtn: lightslategray;
+$clr-operatorBtn: rgb(239, 172, 0);
+$clr-deleteBtn: rgb(218, 79, 79);
+$clr-gray: rgb(141, 143, 145);
+$clr-dark: rgb(47, 47, 47);
+
+/* BASE RULES */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+}
+
+body {
+  height: 100vh;
+  width: auto;
+  background: url(../assets/background.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: $clr-text;
+}
+
+/* CALCULATOR */
+.calculator-container {
+  background-color: $clr-body;
+  height: 600px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  border: 1px solid $clr-gray;
+  box-shadow: inset 0 1px 0 hsl(224, 84%, 74%),
+    inset 0 1px 3px hsla(0, 0%, 0%, 0.2);
+
+  .screen {
+    background-color: $clr-screen;
+    height: 30%;
+    width: 92%;
+    margin: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+    border-radius: inherit;
+    overflow: hidden;
+
+    .screen-upper {
+      text-align: right;
+      align-items: center;
+      padding: 10px 30px 10px 10px;
+      position: relative;
+      top: 10px;
+      font-size: 1.5rem;
+      font-weight: 300;
+    }
+
+    .screen-lower {
+      text-align: right;
+      align-items: center;
+      padding: 10px 30px 10px 10px;
+      position: relative;
+      color: $clr-text;
+      font-size: 4rem;
+      bottom: 10px;
+      letter-spacing: 0px;
+    }
+  }
+
+  .button-container {
+    height: 80%;
+    width: 92%;
+    margin: 15px;
+    margin-top: 0px;
+    display: grid;
+    grid-template: repeat(5, 1fr) / repeat(4, 1fr);
+    gap: 5px;
+    justify-items: stretch;
+    align-items: stretch;
+
+    .btn {
+      border: none;
+      font-size: 2rem;
+      color: $clr-text;
+      &:hover {
+        background-color: $clr-screen;
+      }
+    }
+
+    .number {
+      background-color: $clr-numberBtn;
+    }
+    .delete {
+      background-color: $clr-deleteBtn;
+    }
+    .operator {
+      background-color: $clr-operatorBtn;
+    }
+    .percent {
+      background-color: $clr-numberBtn;
+    }
+    .equal {
+      background-color: $clr-operatorBtn;
+    }
+
+    button:last-of-type {
+      grid-column-end: span 2;
+    }
+  }
+}
+
+/* FOOTER */
+.footer {
+  margin-top: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: $clr-dark;
+  font-size: 1.4rem;
+  i {
+    font-size: 1.4rem;
+    color: $clr-dark;
+  }
+}

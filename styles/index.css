@@ -1,38 +1,51 @@
-html {
+/* VARIABLES & FONTS */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;600;700;800&display=swap");
+/* BASE RULES */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+}
+
 body {
+  height: 100vh;
+  width: auto;
+  background: url(../assets/background.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-family: "Arial Narrow Bold", sans-serif;
-  font-size: 36px;
-  color: white;
-  background-color: rgb(217, 217, 255);
+  color: #eee;
 }
 
+/* CALCULATOR */
 .calculator-container {
-  background-color: lightblue;
+  background-color: rgb(226, 226, 226);
   height: 600px;
   width: 400px;
-  margin: 50px auto;
-  border: 2px solid lightslategray;
-  border-radius: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  padding: 0;
-  gap: 10px;
+  border: 1px solid rgb(141, 143, 145);
+  box-shadow: inset 0 1px 0 hsl(224deg, 84%, 74%), inset 0 1px 3px hsla(0deg, 0%, 0%, 0.2);
 }
-
-.screen {
+.calculator-container .screen {
   background-color: lightseagreen;
   height: 30%;
-  width: 95%;
-  margin: 20px 20px 10px 20px;
+  width: 92%;
+  margin: 15px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -40,76 +53,74 @@ body {
   border-radius: inherit;
   overflow: hidden;
 }
-
-.screen-upper,
-.screen-lower {
+.calculator-container .screen .screen-upper {
   text-align: right;
   align-items: center;
-  padding: 10px;
-  margin: 0;
+  padding: 10px 30px 10px 10px;
   position: relative;
+  top: 10px;
+  font-size: 1.5rem;
+  font-weight: 300;
 }
-
-.screen-upper {
-  color: whitesmoke;
-  font-weight: lighter;
-  font-size: 1rem;
-  top: 20px;
-}
-
-.screen-lower {
-  color: white;
-  font-weight: lighter;
+.calculator-container .screen .screen-lower {
+  text-align: right;
+  align-items: center;
+  padding: 10px 30px 10px 10px;
+  position: relative;
+  color: #eee;
   font-size: 4rem;
-  bottom: 15px;
+  bottom: 10px;
   letter-spacing: 0px;
 }
-
-.button-container {
+.calculator-container .button-container {
   height: 80%;
-  width: 95%;
-  padding: 20px;
-  padding-top: 0;
-  margin: 0;
+  width: 92%;
+  margin: 15px;
+  margin-top: 0px;
   display: grid;
-  grid-template: repeat(5, 1fr) / repeat(4, 1fr);
+  grid-template: repeat(5, 1fr)/repeat(4, 1fr);
   gap: 5px;
   justify-items: stretch;
   align-items: stretch;
 }
-
-.btn {
+.calculator-container .button-container .btn {
   border: none;
-  border-radius: 5px;
   font-size: 2rem;
-  font-weight: lighter;
-  background-color: lightslategray;
-  color: white;
+  color: #eee;
 }
-
-.delete {
+.calculator-container .button-container .btn:hover {
+  background-color: lightseagreen;
+}
+.calculator-container .button-container .number {
+  background-color: lightslategray;
+}
+.calculator-container .button-container .delete {
   background-color: rgb(218, 79, 79);
 }
-
-.operator {
+.calculator-container .button-container .operator {
   background-color: rgb(239, 172, 0);
 }
-
-#percentBtn {
+.calculator-container .button-container .percent {
   background-color: lightslategray;
 }
-
-button:last-of-type {
+.calculator-container .button-container .equal {
+  background-color: rgb(239, 172, 0);
+}
+.calculator-container .button-container button:last-of-type {
   grid-column-end: span 2;
 }
 
+/* FOOTER */
 .footer {
+  margin-top: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 5px;
+  gap: 10px;
+  color: rgb(47, 47, 47);
+  font-size: 1.4rem;
 }
-
 .footer i {
-  font-size: 1.8rem;
-}
+  font-size: 1.4rem;
+  color: rgb(47, 47, 47);
+}/*# sourceMappingURL=index.css.map */
