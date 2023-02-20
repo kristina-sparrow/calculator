@@ -41,8 +41,8 @@ body {
 /* CALCULATOR */
 .calculator-container {
   background-color: $clr-body;
-  height: 600px;
-  width: 400px;
+  height: 525px;
+  width: 350px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -135,9 +135,9 @@ body {
   justify-content: center;
   gap: 10px;
   color: $clr-dark;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   i {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     color: $clr-dark;
   }
 }
